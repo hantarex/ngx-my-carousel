@@ -1,0 +1,16 @@
+version: "3"
+services:
+
+  my-carousel:
+    restart: always
+    build:
+      dockerfile: local.Dockerfile
+    container_name: my-carousel
+    working_dir: /application/src
+#    command: /bin/bash -c "npm i && npm run serve"
+    command: /bin/bash -c "tail -f > /dev/null"
+    volumes:
+      - ./:/application/
+    ports:
+      - "4365:4200"
+
