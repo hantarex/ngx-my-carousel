@@ -5,6 +5,7 @@
     "ng": "ng",
     "start": "ng serve --host 0.0.0.0",
     "build": "ng build",
+    "build-lib-dev": "ng build ngx-carousel -c development",
     "build-lib": "ng build ngx-carousel",
     "watch": "ng build --watch --configuration development",
     "test": "ng test"
