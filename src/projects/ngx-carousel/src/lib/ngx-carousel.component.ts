@@ -3,7 +3,7 @@ import {
   AfterViewInit,
   Component,
   ContentChildren, ElementRef,
-  EventEmitter, HostListener, Inject,
+  EventEmitter, HostListener, Inject, Injectable,
   Input,
   OnDestroy,
   Output, PLATFORM_ID, QueryList, Renderer2, ViewChild
@@ -17,13 +17,30 @@ import {animate, AnimationBuilder, style} from "@angular/animations";
 import {CommonModule, isPlatformBrowser} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton, MatMiniFabButton} from "@angular/material/button";
+import {HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule} from '@angular/platform-browser';
+import Hammer from 'hammerjs';
 
 enum Direction {
   left,
   right,
   index
 }
-
+@Injectable()
+export class MyHammerConfig extends HammerGestureConfig {
+  override overrides = <any>{
+    pan: {
+      direction: 30,
+      threshold: 1,
+    },
+    swipe: {
+      direction: 30,
+    },
+  };
+  override options = <any>{
+    touchAction: 'auto',
+    inputClass: Hammer.TouchInput,
+  };
+}
 @Component({
   selector: 'ngx-ngx-carousel',
   standalone: true,
@@ -31,10 +48,19 @@ enum Direction {
     MatIcon,
     CommonModule,
     MatIconButton,
-    MatMiniFabButton
+    MatMiniFabButton,
+    HammerModule,
   ],
   templateUrl: './ngx-carousel.component.html',
-  styleUrls: ['./ngx-carousel.component.scss']
+  styleUrls: ['./ngx-carousel.component.scss'],
+  providers: [
+    {
+      provide: HAMMER_GESTURE_CONFIG,
+      useFactory: (): any => {
+        return new MyHammerConfig();
+      },
+    },
+  ],
 })
 export class NgxCarouselComponent   implements AfterContentInit, AfterViewInit, MatCarousel, OnDestroy {
   @Input() public timings = '250ms ease-in';

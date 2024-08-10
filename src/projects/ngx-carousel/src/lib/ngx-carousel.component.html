@@ -13,20 +13,23 @@
     [style.flex-direction]="orientation === 'rtl' ? 'row-reverse' : 'row'"
     [style.height]="!maintainAspectRatio ? '100%' : 'auto'"
   >
-    <li
-      #carouselSlide
-      *ngFor="let slide of slidesList"
-      class="carousel-slide"
-      role="option"
-      [style.padding-bottom]="maintainAspectRatio && proportion ? proportion + '%': '0px'"
-      [style.height]="!maintainAspectRatio && slideHeight ? slideHeight : '0px'"
-      (panleft)="onPan($event, carouselSlide)"
-      (panright)="onPan($event, carouselSlide)"
-      (panend)="onPanEnd($event, carouselSlide)"
-      (pancancel)="onPanEnd($event, carouselSlide)"
-    >
-      <ng-container *ngIf="slide.load" [ngTemplateOutlet]="slide.templateRef!"></ng-container>
-    </li>
+    @for (slide of slidesList; track slide.image) {
+      <li
+        #carouselSlide
+        class="carousel-slide"
+        role="option"
+        [style.padding-bottom]="maintainAspectRatio && proportion ? proportion + '%': '0px'"
+        [style.height]="!maintainAspectRatio && slideHeight ? slideHeight : '0px'"
+        (panleft)="onPan($event, carouselSlide)"
+        (panright)="onPan($event, carouselSlide)"
+        (panend)="onPanEnd($event, carouselSlide)"
+        (pancancel)="onPanEnd($event, carouselSlide)"
+      >
+        @if (slide.load && slide.templateRef) {
+          <ng-container [ngTemplateOutlet]="slide.templateRef"></ng-container>
+        }
+      </li>
+    }
   </ul>
 
   <button

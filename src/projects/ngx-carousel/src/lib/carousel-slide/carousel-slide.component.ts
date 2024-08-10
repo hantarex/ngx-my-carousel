@@ -1,14 +1,17 @@
-import {Component, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {Component, Injectable, Input, OnInit, TemplateRef, ViewChild} from '@angular/core';
 import {ListKeyManagerOption} from "@angular/cdk/a11y";
 import {MatCarouselSlide} from "./carousel-slide";
-import {DomSanitizer, SafeStyle} from "@angular/platform-browser";
+import {
+  DomSanitizer,
+  SafeStyle
+} from "@angular/platform-browser";
 import {CommonModule} from "@angular/common";
 
 @Component({
   selector: 'ngx-carousel-slide',
   standalone: true,
   imports: [
-    CommonModule
+    CommonModule,
   ],
   templateUrl: './carousel-slide.component.html',
   styleUrl: './carousel-slide.component.scss'

@@ -4,6 +4,7 @@ services:
   my-carousel:
     restart: always
     build:
+      context: ./
       dockerfile: local.Dockerfile
     container_name: my-carousel
     working_dir: /application/src
@@ -12,5 +13,13 @@ services:
     volumes:
       - ./:/application/
     ports:
-      - "4365:4200"
+      - "4375:4200"
+    networks:
+        - my-carousel
 
+networks:
+    my-carousel:
+        driver: bridge
+        ipam:
+            config:
+                -   subnet: 11.21.0.0/16
