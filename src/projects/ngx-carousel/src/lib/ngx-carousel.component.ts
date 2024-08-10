@@ -28,13 +28,8 @@ enum Direction {
 @Injectable()
 export class MyHammerConfig extends HammerGestureConfig {
   override overrides = <any>{
-    pan: {
-      direction: 30,
-      threshold: 1,
-    },
-    swipe: {
-      direction: 30,
-    },
+    pinch: { enable: false },
+    rotate: { enable: false }
   };
   override options = <any>{
     touchAction: 'auto',
