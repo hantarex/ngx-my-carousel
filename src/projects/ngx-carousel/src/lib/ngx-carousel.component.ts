@@ -37,25 +37,24 @@ export class MyHammerConfig extends HammerGestureConfig {
   };
 }
 @Component({
-  selector: 'ngx-ngx-carousel',
-  standalone: true,
-  imports: [
-    MatIcon,
-    CommonModule,
-    MatIconButton,
-    MatMiniFabButton,
-    HammerModule,
-  ],
-  templateUrl: './ngx-carousel.component.html',
-  styleUrls: ['./ngx-carousel.component.scss'],
-  providers: [
-    {
-      provide: HAMMER_GESTURE_CONFIG,
-      useFactory: (): any => {
-        return new MyHammerConfig();
-      },
-    },
-  ],
+    selector: 'ngx-ngx-carousel',
+    imports: [
+        MatIcon,
+        CommonModule,
+        MatIconButton,
+        MatMiniFabButton,
+        HammerModule,
+    ],
+    templateUrl: './ngx-carousel.component.html',
+    styleUrls: ['./ngx-carousel.component.scss'],
+    providers: [
+        {
+            provide: HAMMER_GESTURE_CONFIG,
+            useFactory: (): any => {
+                return new MyHammerConfig();
+            },
+        },
+    ]
 })
 export class NgxCarouselComponent   implements AfterContentInit, AfterViewInit, MatCarousel, OnDestroy {
   @Input() public timings = '250ms ease-in';

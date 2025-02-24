@@ -8,13 +8,12 @@ import {
 import {CommonModule} from "@angular/common";
 
 @Component({
-  selector: 'ngx-carousel-slide',
-  standalone: true,
-  imports: [
-    CommonModule,
-  ],
-  templateUrl: './carousel-slide.component.html',
-  styleUrl: './carousel-slide.component.scss'
+    selector: 'ngx-carousel-slide',
+    imports: [
+        CommonModule,
+    ],
+    templateUrl: './carousel-slide.component.html',
+    styleUrl: './carousel-slide.component.scss'
 })
 export class CarouselSlideComponent implements ListKeyManagerOption, MatCarouselSlide, OnInit {
   @Input({required: true}) public image!: SafeStyle;
