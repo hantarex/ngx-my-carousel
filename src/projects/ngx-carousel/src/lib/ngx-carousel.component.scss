@@ -1,4 +1,4 @@
-@import "../styles/mixins";
+@use "../styles/mixins" as mixins;
 
 .carousel {
   width: 100%;
@@ -9,7 +9,7 @@
   & > button {
     position: absolute;
     z-index: 1;
-    @include centerY();
+    @include mixins.centerY();
 
     &:first-of-type {
       left: 30px;
@@ -30,7 +30,7 @@
   }
 
   &-slide {
-    @include size(100%, 0);
+    @include mixins.size(100%, 0);
     display: flex;
     flex-shrink: 0;
     position: relative;
@@ -45,11 +45,11 @@
     position: absolute;
     bottom: 15px;
     z-index: 1;
-    @include centerX();
+    @include mixins.centerX();
     outline: none;
 
     & > button {
-      @include size(10px);
+      @include mixins.size(10px);
       margin: 7.5px;
     }
   }

@@ -51,7 +51,10 @@ export class MyHammerConfig extends HammerGestureConfig {
         {
             provide: HAMMER_GESTURE_CONFIG,
             useFactory: (): any => {
+              if (typeof window !== 'undefined') {
                 return new MyHammerConfig();
+              }
+              return new HammerGestureConfig();
             },
         },
     ]
