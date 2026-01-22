@@ -17,47 +17,25 @@ import {animate, AnimationBuilder, style} from "@angular/animations";
 import {CommonModule, isPlatformBrowser} from "@angular/common";
 import {MatIcon} from "@angular/material/icon";
 import {MatIconButton, MatMiniFabButton} from "@angular/material/button";
-import {HAMMER_GESTURE_CONFIG, HammerGestureConfig, HammerModule} from '@angular/platform-browser';
-import Hammer from 'hammerjs';
+import {SwipeDirective} from "./swipe.directive";
 
 enum Direction {
   left,
   right,
   index
 }
-@Injectable()
-export class MyHammerConfig extends HammerGestureConfig {
-  override overrides = <any>{
-    pinch: { enable: false },
-    rotate: { enable: false }
-  };
-  override options = <any>{
-    touchAction: 'auto',
-    inputClass: Hammer.TouchInput,
-  };
-}
+
 @Component({
     selector: 'ngx-ngx-carousel',
-    imports: [
-        MatIcon,
-        CommonModule,
-        MatIconButton,
-        MatMiniFabButton,
-        HammerModule,
-    ],
+  imports: [
+    MatIcon,
+    CommonModule,
+    MatIconButton,
+    MatMiniFabButton,
+    SwipeDirective,
+  ],
     templateUrl: './ngx-carousel.component.html',
-    styleUrls: ['./ngx-carousel.component.scss'],
-    providers: [
-        {
-            provide: HAMMER_GESTURE_CONFIG,
-            useFactory: (): any => {
-              if (typeof window !== 'undefined') {
-                return new MyHammerConfig();
-              }
-              return new HammerGestureConfig();
-            },
-        },
-    ]
+    styleUrls: ['./ngx-carousel.component.scss']
 })
 export class NgxCarouselComponent   implements AfterContentInit, AfterViewInit, MatCarousel, OnDestroy {
   @Input() public timings = '250ms ease-in';
@@ -294,13 +272,9 @@ export class NgxCarouselComponent   implements AfterContentInit, AfterViewInit, 
     this.goto(Direction.index, index);
   }
 
-  public onPan(event: any, slideElem: HTMLElement): void {
+  public onPan(deltaX: number, slideElem: HTMLElement): void {
     // https://github.com/angular/angular/issues/10541#issuecomment-346539242
     // if y velocity is greater, it's a panup/pandown, so ignore.
-    if (Math.abs(event.velocityY) > Math.abs(event.velocityX)) {
-      return;
-    }
-    let deltaX = event.deltaX;
     if (this.isOutOfBounds()) {
       deltaX *= 0.2; // decelerate movement;
     }
