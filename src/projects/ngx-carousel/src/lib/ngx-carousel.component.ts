@@ -3,7 +3,7 @@ import {
   AfterViewInit,
   Component,
   ContentChildren, ElementRef,
-  EventEmitter, HostListener, Inject, Injectable,
+  EventEmitter, HostListener, Inject, Injectable, input,
   Input,
   OnDestroy,
   Output, PLATFORM_ID, QueryList, Renderer2, ViewChild
@@ -40,6 +40,7 @@ enum Direction {
 export class NgxCarouselComponent   implements AfterContentInit, AfterViewInit, MatCarousel, OnDestroy {
   @Input() public timings = '250ms ease-in';
   @Input() public lazyLoad = false;
+  isDebug = input(false);
   @Input() public svgIconOverrides: SvgIconOverrides = {
     arrowBack: '',
     arrowForward: ''
@@ -287,14 +288,14 @@ export class NgxCarouselComponent   implements AfterContentInit, AfterViewInit, 
     );
   }
 
-  public onPanEnd(event: any, slideElem: HTMLElement): void {
+  public onPanEnd(event: number, slideElem: HTMLElement): void {
     this.renderer.removeStyle(slideElem, 'cursor');
 
     if (
       !this.isOutOfBounds() &&
-      Math.abs(event.deltaX) > this.getWidth() * 0.25
+      Math.abs(event) > this.getWidth() * 0.25
     ) {
-      if (event.deltaX <= 0) {
+      if (event <= 0) {
         this.next();
         return;
       }

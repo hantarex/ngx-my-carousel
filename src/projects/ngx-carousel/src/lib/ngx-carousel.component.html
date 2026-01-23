@@ -19,6 +19,7 @@
       class="carousel-slide"
       role="option"
       appSwipe
+      [isDebug]="isDebug()"
       (onMove)="onPan($event.x, carouselSlide)"
       (swipeLeft)="onPanEnd($event, carouselSlide)"
       (swipeRight)="onPanEnd($event, carouselSlide)"

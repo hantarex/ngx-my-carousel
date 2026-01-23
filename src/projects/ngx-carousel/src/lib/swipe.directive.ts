@@ -18,7 +18,9 @@ export class SwipeDirective {
   private touchEndX = 0;
   private touchEndY = 0;
 
-  constructor(private el: ElementRef) {}
+  constructor(private el: ElementRef) {
+    console.log('init swipe')
+  }
 
   @HostListener('touchstart', ['$event'])
   onTouchStart(event: TouchEvent) {
@@ -66,19 +68,34 @@ export class SwipeDirective {
     const absDeltaY = Math.abs(deltaY);
 
     if (absDeltaX < this.minSwipeDistance() && absDeltaY < this.minSwipeDistance()) {
+      if(this.isDebug()) {
+        console.log('minSwipeDistance skip', absDeltaX, this.minSwipeDistance(), absDeltaY, this.minSwipeDistance())
+      }
       return;
     }
 
     if (absDeltaX > absDeltaY) {
       if (deltaX > 0) {
+        if(this.isDebug()) {
+          console.log('emit swipeRight', deltaX)
+        }
         this.swipeRight.emit(deltaX);
       } else {
+        if(this.isDebug()) {
+          console.log('emit swipeLeft', deltaX)
+        }
         this.swipeLeft.emit(deltaX);
       }
     } else {
       if (deltaY > 0) {
+        if(this.isDebug()) {
+          console.log('emit swipeDown', deltaY)
+        }
         this.swipeDown.emit(deltaY);
       } else {
+        if(this.isDebug()) {
+          console.log('emit swipeUp', deltaY)
+        }
         this.swipeUp.emit(deltaY);
       }
     }
