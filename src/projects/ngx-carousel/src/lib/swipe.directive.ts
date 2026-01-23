@@ -6,6 +6,7 @@ import {Directive, ElementRef, HostListener, input, output} from '@angular/core'
 })
 export class SwipeDirective {
   public minSwipeDistance = input(30);
+  public isDebug = input(false);
   public swipeLeft = output<number>();
   public swipeRight = output<number>();
   public swipeUp = output<number>();
@@ -21,12 +22,18 @@ export class SwipeDirective {
 
   @HostListener('touchstart', ['$event'])
   onTouchStart(event: TouchEvent) {
+    if(this.isDebug()) {
+      console.log('onTouchStart')
+    }
     this.touchStartX = event.changedTouches[0].screenX;
     this.touchStartY = event.changedTouches[0].screenY;
   }
 
   @HostListener('touchend', ['$event'])
   onTouchEnd(event: TouchEvent) {
+    if(this.isDebug()) {
+      console.log('onTouchEnd')
+    }
     this.touchEndX = event.changedTouches[0].screenX;
     this.touchEndY = event.changedTouches[0].screenY;
     this.handleSwipe();
@@ -40,12 +47,18 @@ export class SwipeDirective {
   }
 
   private handleMove(): void {
+    if(this.isDebug()) {
+      console.log('handleMove')
+    }
     const deltaX = this.touchEndX - this.touchStartX;
     const deltaY = this.touchEndY - this.touchStartY;
     this.onMove.emit({x: deltaX, y: deltaY});
   }
 
   private handleSwipe() {
+    if(this.isDebug()) {
+      console.log('handleSwipe')
+    }
     const deltaX = this.touchEndX - this.touchStartX;
     const deltaY = this.touchEndY - this.touchStartY;
 
